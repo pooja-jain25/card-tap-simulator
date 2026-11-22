@@ -6,7 +6,7 @@ An interactive explainer of what happens when you tap a Visa card, from the regi
 - **How crypto cards work:** funding models, a crypto cost calculator, the crypto card stack, custody models and stablecoin settlement.
 - **Latest news:** fintech and crypto headlines, refreshed daily by a GitHub Action.
 
-Built by Pooja Jain with Claude.
+Built by Pooja Jain 
 
 ## How it works
 
