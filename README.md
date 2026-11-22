@@ -1,6 +1,6 @@
 # Card Tap Simulator
 
-An interactive explainer of what happens when you tap a Visa card, from the register to the issuer and back, plus a guide to how crypto-linked cards work.
+An interactive explainer of what happens when you tap a card, from the register to the issuer and back, plus a guide to how crypto-linked cards work.
 
 - **Card tap simulator:** step through authorization for a bank debit card, a crypto-linked card, and a declined crypto card, then see clearing, settlement and fees.
 - **How crypto cards work:** funding models, a crypto cost calculator, the crypto card stack, custody models and stablecoin settlement.
