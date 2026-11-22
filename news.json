@@ -1,67 +1,103 @@
 {
-  "updated": "2026-11-21",
+  "updated": "2026-11-22",
   "fintech": [
     {
+      "date": "2026-11-20",
+      "title": "PayPal CEO remakes team",
+      "source": "Payments Dive",
+      "url": "https://www.paymentsdive.com/news/paypal-ceo-remakes-team/875344/"
+    },
+    {
+      "date": "2026-11-20",
+      "title": "Bill sells for $6B to TPG, Corpay",
+      "source": "Payments Dive",
+      "url": "https://www.paymentsdive.com/news/bill-sells-for-6b-to-tpg-corpay/875331/"
+    },
+    {
+      "date": "2026-11-19",
+      "title": "M&T aims to \u2018dial up\u2019 credit card rewards",
+      "source": "Payments Dive",
+      "url": "https://www.paymentsdive.com/news/mt-bank-credit-card-rewards-retail/875212/"
+    },
+    {
+      "date": "2026-11-19",
+      "title": "Researchers spot ACH loopholes",
+      "source": "Payments Dive",
+      "url": "https://www.paymentsdive.com/news/researchers-spot-ach-loopholes/875186/"
+    },
+    {
+      "date": "2026-11-19",
+      "title": "Google wallet returns to Apple",
+      "source": "Payments Dive",
+      "url": "https://www.paymentsdive.com/news/google-wallet-returns-to-apple/875182/"
+    },
+    {
+      "date": "2026-11-18",
+      "title": "ACI Worldwide\u2019s CEO heads out",
+      "source": "Payments Dive",
+      "url": "https://www.paymentsdive.com/news/aci-worldwides-ceo-heads-out/875047/"
+    },
+    {
+      "date": "2026-11-18",
+      "title": "Klarna launches AI \u2018concierge\u2019",
+      "source": "Payments Dive",
+      "url": "https://www.paymentsdive.com/news/klarna-launches-ai-concierge/875033/"
+    },
+    {
       "date": "2026-11-17",
-      "title": "OpenAI debuts ChatGPT Wallet for agentic commerce",
-      "source": "FinTech Futures",
-      "url": "https://www.fintechfutures.com/"
-    },
-    {
-      "date": "2026-11-12",
-      "title": "DTCC plans Solana access for live tokenization service",
-      "source": "NCFA Weekly Fintech Intelligence",
-      "url": "https://ncfacanada.org/?p=86218"
-    },
-    {
-      "date": "2026-11-09",
-      "title": "Northern Trust cuts onboarding data prep 83% with AI agent",
-      "source": "NCFA Weekly Fintech Intelligence",
-      "url": "https://ncfacanada.org/?p=86218"
-    },
-    {
-      "date": "2026-11-04",
-      "title": "Tokenisation fintech tZERO to go public via SPAC deal",
-      "source": "FinTech Futures",
-      "url": "https://www.fintechfutures.com/"
-    },
-    {
-      "date": "2026-11-02",
-      "title": "CD&R and GTCR reportedly weighing $40bn buyout of Global Payments",
-      "source": "FinTech Futures",
-      "url": "https://www.fintechfutures.com/"
+      "title": "Fed to boost payment service fees",
+      "source": "Payments Dive",
+      "url": "https://www.paymentsdive.com/news/federal-reserve-to-boost-payment-service-fees/874911/"
     }
   ],
   "crypto": [
     {
-      "date": "2026-11-12",
-      "title": "DTCC plans Solana access for live tokenization service",
-      "source": "NCFA Weekly Fintech Intelligence",
-      "url": "https://ncfacanada.org/?p=86218"
-    },
-    {
-      "date": "2026-11-04",
-      "title": "Tokenisation fintech tZERO to go public via SPAC deal",
-      "source": "FinTech Futures",
-      "url": "https://www.fintechfutures.com/"
-    },
-    {
-      "date": "2026-10-25",
-      "title": "Mastercard launches Stablecoin Security to detect fraud and scams in stablecoin payments",
-      "source": "Week in Stablecoin Payments",
-      "url": "https://sg.linkedin.com/in/edithlim"
-    },
-    {
-      "date": "2026-08-19",
-      "title": "OCC races to finalize GENIUS Act stablecoin rules by November",
+      "date": "2026-11-21",
+      "title": "Kalshi faces Monday hearing on New York order it says would shut down its exchange nationwide",
       "source": "The Block",
-      "url": "https://www.theblock.co/tag/stablecoins?page=5"
+      "url": "https://www.theblock.co/news/regulation/2026-11-21-kalshi-faces-monday-hearing-on-new-york-order-it-says-would-shut-down-its-exchange-nationwide-444813"
     },
     {
-      "date": "2026-06-03",
-      "title": "Mastercard expands settlement to include stablecoins, plus intraday, weekend and holiday options",
-      "source": "Mastercard",
-      "url": "https://www.mastercard.com/gb/en/news-and-trends/press/2026/june/mastercard-expands-settlement-capabilities-to-include-stablecoin.html"
+      "date": "2026-11-21",
+      "title": "Cyber investigating suspected $1 million bridge exploit as Upbit, Bithumb freeze transfers",
+      "source": "The Block",
+      "url": "https://www.theblock.co/news/defi/2026-11-21-cyber-investigating-suspected-1-million-bridge-exploit-as-upbit-bithumb-freeze-transfers-444810"
+    },
+    {
+      "date": "2026-11-21",
+      "title": "Bitcoin rebounds above $60,000 after $1.8 billion crypto liquidation wave",
+      "source": "CoinDesk",
+      "url": "https://www.coindesk.com/markets/2026/11/21/bitcoin-bounces-9-from-two-year-low-to-retake-usd60-000-as-traders-eye-monday-s-stock-open"
+    },
+    {
+      "date": "2026-11-21",
+      "title": "Cross-chain protocol Chainflip's FLIP tanks 30% after suspected $4.86 million vault drain",
+      "source": "CoinDesk",
+      "url": "https://www.coindesk.com/business/2026/11/21/cross-chain-protocol-chainflip-s-flip-tanks-30-after-suspected-usd4-86-million-vault-drain"
+    },
+    {
+      "date": "2026-11-21",
+      "title": "Chainflip\u2019s FLIP drops 34% after attacker drains $4.86 million from vault with suspected key compromise",
+      "source": "The Block",
+      "url": "https://www.theblock.co/news/defi/2026-11-21-chainflips-flip-drops-34-after-attacker-drains-4-86-million-from-vault-with-suspected-key-compromise-444804"
+    },
+    {
+      "date": "2026-11-21",
+      "title": "Ether treasury firm BTCS warns SEC its $54 million Aave loan could be liquidated",
+      "source": "CoinDesk",
+      "url": "https://www.coindesk.com/markets/2026/11/21/ether-treasury-firm-btcs-warns-sec-its-usd54-million-aave-loan-could-be-liquidated"
+    },
+    {
+      "date": "2026-11-21",
+      "title": "Here\u2019s what happened in crypto today",
+      "source": "Cointelegraph",
+      "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+    },
+    {
+      "date": "2026-11-21",
+      "title": "ECB seeks industry partners for tokenized deposits, securities experiments",
+      "source": "Cointelegraph",
+      "url": "https://cointelegraph.com/news/ecb-tokenized-deposits-securities-experiments-appia?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
     }
   ]
 }
