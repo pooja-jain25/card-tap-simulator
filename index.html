@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Card Tap Simulator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: a horizontal "network schematic" of the parties, a step panel below it, then settlement and a glossary. */
+:root {
+  --bg: #f3f4f1;
+  --surface: #ffffff;
+  --ink: #16202c;
+  --muted: #5b6673;
+  --line: #d5d9d4;
+  --accent: #1f4fd1;
+  --accent-soft: #e4ebfb;
+  --signal: #c2410c;
+  --ok: #157347;
+  --ok-soft: #e3f3ea;
+  --bad: #b42318;
+  --bad-soft: #fbe7e5;
+  --font-display: "IBM Plex Sans Condensed", "Arial Narrow", sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f151c; --surface: #17202a; --ink: #e7ebef; --muted: #9aa6b2; --line: #2b3742;
+    --accent: #7fa2ff; --accent-soft: #1d2a4a; --signal: #fb923c;
+    --ok: #4ade80; --ok-soft: #12321f; --bad: #f87171; --bad-soft: #3a1717;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f151c; --surface: #17202a; --ink: #e7ebef; --muted: #9aa6b2; --line: #2b3742;
+  --accent: #7fa2ff; --accent-soft: #1d2a4a; --signal: #fb923c;
+  --ok: #4ade80; --ok-soft: #12321f; --bad: #f87171; --bad-soft: #3a1717;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.55; }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 28px 20px 56px; display: grid; gap: 28px; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; line-height: 1.15; }
+h1 { font-size: 2.1rem; font-weight: 700; letter-spacing: -0.01em; }
+h2 { font-size: 1.35rem; font-weight: 600; }
+h3 { font-size: 1.05rem; font-weight: 600; }
+p { margin: 0; max-width: 68ch; }
+.lede { color: var(--muted); margin-top: 6px; }
+header { display: grid; gap: 4px; }
+
+.controls { display: flex; flex-wrap: wrap; gap: 16px 24px; align-items: end; }
+.field { display: grid; gap: 6px; }
+.field > span { font-size: 0.8rem; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; }
+.seg { display: flex; flex-wrap: wrap; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--surface); }
+.seg button { border: 0; background: transparent; color: var(--ink); font: 500 0.92rem var(--font-body); padding: 9px 14px; cursor: pointer; border-right: 1px solid var(--line); }
+.seg button:last-child { border-right: 0; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: #fff; }
+input[type="number"] { font: 500 1rem var(--font-mono); padding: 8px 10px; width: 120px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); }
+.btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn { font: 600 0.92rem var(--font-body); padding: 9px 16px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
+.btn.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.btn:disabled { opacity: 0.4; cursor: default; }
+button:focus-visible, input:focus-visible { outline: 3px solid var(--signal); outline-offset: 2px; }
+
+.schematic { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 22px 18px 18px; overflow-x: auto; }
+.lane { display: flex; align-items: stretch; gap: 0; min-width: 820px; }
+.node { flex: 1 1 0; min-width: 104px; border: 1.5px solid var(--line); border-radius: 10px; padding: 10px 10px 12px; display: grid; gap: 4px; align-content: start; background: var(--bg); transition: border-color .2s, background .2s; }
+.node .role { font: 500 0.68rem var(--font-mono); text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+.node .name { font: 600 0.95rem var(--font-display); }
+.node .eg { font-size: 0.78rem; color: var(--muted); }
+.node.active { border-color: var(--accent); background: var(--accent-soft); }
+.node.visited .role { color: var(--accent); }
+.link { flex: 0 0 34px; display: grid; align-content: center; justify-items: center; color: var(--muted); font: 500 0.9rem var(--font-mono); }
+.link .arr { line-height: 1; }
+.link.live { color: var(--signal); }
+.dirline { margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; font-size: 0.85rem; color: var(--muted); }
+.pill { display: inline-block; font: 600 0.72rem var(--font-mono); padding: 3px 8px; border-radius: 999px; letter-spacing: 0.04em; text-transform: uppercase; }
+.pill.req { background: var(--accent-soft); color: var(--accent); }
+.pill.resp-ok { background: var(--ok-soft); color: var(--ok); }
+.pill.resp-bad { background: var(--bad-soft); color: var(--bad); }
+.clock { font: 500 0.85rem var(--font-mono); color: var(--ink); font-variant-numeric: tabular-nums; }
+
+.step { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 20px; }
+@media (max-width: 760px) { .step { grid-template-columns: 1fr; } }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 20px; display: grid; gap: 12px; align-content: start; }
+.stepnum { font: 500 0.8rem var(--font-mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.why { border-left: 3px solid var(--signal); padding-left: 12px; color: var(--ink); }
+.why b { font-family: var(--font-display); }
+.msg { font-family: var(--font-mono); font-size: 0.82rem; display: grid; gap: 0; }
+.msg .row { display: grid; grid-template-columns: 9.5em 1fr; gap: 10px; padding: 6px 0; border-bottom: 1px dashed var(--line); }
+.msg .row:last-child { border-bottom: 0; }
+.msg .k { color: var(--muted); }
+.msg .v { word-break: break-word; }
+.result { font: 600 0.95rem var(--font-body); padding: 10px 12px; border-radius: 8px; }
+.result.ok { background: var(--ok-soft); color: var(--ok); }
+.result.bad { background: var(--bad-soft); color: var(--bad); }
+
+.settle { display: grid; gap: 16px; }
+.settle ol { margin: 0; padding-left: 1.3em; display: grid; gap: 8px; max-width: 72ch; }
+.money { display: grid; gap: 0; max-width: 520px; font-variant-numeric: tabular-nums; }
+.money .row { display: grid; grid-template-columns: 1fr auto; gap: 12px; padding: 7px 0; border-bottom: 1px solid var(--line); }
+.money .row.total { font-weight: 600; border-bottom: 0; }
+.money .amt { font-family: var(--font-mono); }
+.note { font-size: 0.85rem; color: var(--muted); }
+
+.gloss { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
+.gloss .card { gap: 6px; padding: 16px; }
+.gloss p { font-size: 0.92rem; }
+
+nav.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+nav.tabs a { font: 600 0.95rem var(--font-body); color: var(--muted); text-decoration: none; padding: 10px 14px; border-bottom: 3px solid transparent; margin-bottom: -1px; }
+nav.tabs a[aria-current="page"] { color: var(--ink); border-bottom-color: var(--accent); }
+nav.tabs a:focus-visible { outline: 3px solid var(--signal); outline-offset: 2px; }
+.view { display: grid; gap: 28px; }
+.view[hidden] { display: none; }
+.models { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.models .card { gap: 8px; }
+.tag { font: 500 0.7rem var(--font-mono); text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); }
+.flow { margin: 0; padding-left: 1.3em; display: grid; gap: 6px; font-size: 0.93rem; }
+.tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 640px; font-size: 0.92rem; }
+th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 600 0.8rem var(--font-body); text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); background: var(--bg); }
+tr:last-child td { border-bottom: 0; }
+td:first-child { font-weight: 600; }
+.calc { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; }
+@media (max-width: 760px) { .calc { grid-template-columns: 1fr; } }
+.calc .inputs { display: grid; gap: 14px; align-content: start; }
+.calc select, .calc input { font: 500 1rem var(--font-mono); padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); width: 100%; max-width: 260px; }
+.big { font: 600 1.6rem var(--font-mono); font-variant-numeric: tabular-nums; }
+.stack { display: grid; gap: 10px; }
+.layer { display: grid; grid-template-columns: 11em 1fr; gap: 14px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+@media (max-width: 560px) { .layer { grid-template-columns: 1fr; gap: 4px; } }
+.layer .ln { font: 600 0.95rem var(--font-display); }
+.layer p { font-size: 0.92rem; }
+
+.news { display: grid; gap: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+.news a.item { display: grid; grid-template-columns: 7.5em 1fr; gap: 14px; padding: 12px 16px; border-bottom: 1px solid var(--line); color: var(--ink); text-decoration: none; }
+.news a.item:last-child { border-bottom: 0; }
+.news a.item:hover .hl, .news a.item:focus-visible .hl { color: var(--accent); text-decoration: underline; }
+.news a.item:focus-visible { outline: 3px solid var(--signal); outline-offset: -3px; }
+.news .dt { font: 500 0.8rem var(--font-mono); color: var(--muted); font-variant-numeric: tabular-nums; padding-top: 2px; }
+.news .hl { font-weight: 600; }
+.news .src { font-size: 0.82rem; color: var(--muted); }
+@media (max-width: 560px) { .news a.item { grid-template-columns: 1fr; gap: 2px; } }
+
+header.hero { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 28px; align-items: center; }
+@media (max-width: 760px) { header.hero { grid-template-columns: 1fr; } }
+.paycard { width: 290px; aspect-ratio: 1.586; border-radius: 16px; padding: 18px 20px; color: #fff; display: grid; grid-template-rows: auto 1fr auto; position: relative; overflow: hidden;
+  background: linear-gradient(135deg, #1f4fd1 0%, #16202c 100%); box-shadow: 0 14px 30px -12px rgba(22,32,44,.55); transition: background .4s, transform .3s; }
+.paycard.crypto { background: linear-gradient(135deg, #0f766e 0%, #134e4a 45%, #16202c 100%); }
+.paycard.decline { background: linear-gradient(135deg, #7c2d12 0%, #3b1a12 60%, #16202c 100%); }
+.paycard::after { content: ""; position: absolute; inset: -40% -20% auto auto; width: 70%; aspect-ratio: 1; border-radius: 50%; background: rgba(255,255,255,.08); }
+.paycard .top { display: flex; justify-content: space-between; align-items: center; font: 600 0.78rem var(--font-mono); letter-spacing: .08em; }
+.paycard .chip { width: 40px; height: 30px; border-radius: 6px; background: linear-gradient(135deg, #f5d27a, #c9a24a); align-self: center; position: relative; }
+.paycard .chip::before { content: ""; position: absolute; inset: 7px 0; border-top: 1px solid rgba(0,0,0,.25); border-bottom: 1px solid rgba(0,0,0,.25); }
+.paycard .num { font: 500 1.05rem var(--font-mono); letter-spacing: .12em; }
+.paycard .bottom { display: flex; justify-content: space-between; align-items: end; font: 500 0.72rem var(--font-mono); opacity: .9; }
+.paycard .waves { width: 26px; height: 26px; }
+.paycard.tap { animation: tap .9s ease-out; }
+@keyframes tap { 0% { transform: translateY(0) rotate(0); } 35% { transform: translateY(-8px) rotate(-3deg); } 100% { transform: translateY(0) rotate(0); } }
+.paycard .waves path { animation: none; }
+.paycard.tap .waves path { animation: wave .9s ease-out; }
+@keyframes wave { 0% { opacity: .2; } 50% { opacity: 1; } 100% { opacity: .6; } }
+
+.lane { position: relative; }
+.node .ico { width: 22px; height: 22px; color: var(--muted); }
+.node.active .ico, .node.visited .ico { color: var(--accent); }
+.packet { position: absolute; top: -9px; left: 0; width: 18px; height: 18px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 5px var(--accent-soft); transform: translateX(-9px); transition: left .55s cubic-bezier(.5,0,.2,1), background .3s; z-index: 2; }
+.packet.ok { background: var(--ok); box-shadow: 0 0 0 5px var(--ok-soft); }
+.packet.bad { background: var(--bad); box-shadow: 0 0 0 5px var(--bad-soft); }
+.track { position: relative; height: 8px; border-radius: 999px; background: var(--bg); border: 1px solid var(--line); margin-top: 12px; min-width: 820px; }
+.track .fill { position: absolute; inset: 0 auto 0 0; border-radius: 999px; background: linear-gradient(90deg, var(--accent), var(--signal)); transition: width .55s; }
+.track .tick { position: absolute; top: -3px; width: 2px; height: 12px; background: var(--line); }
+.track .tick.done { background: var(--ink); }
+
+.feebar { display: flex; height: 26px; border-radius: 8px; overflow: hidden; max-width: 520px; border: 1px solid var(--line); }
+.feebar span { display: block; height: 100%; transition: width .4s; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 0.82rem; color: var(--muted); }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+
+.week { display: grid; grid-template-columns: 7.5em repeat(7, minmax(30px, 1fr)); gap: 6px; align-items: center; font-size: 0.85rem; max-width: 560px; }
+.week .d { text-align: center; font: 500 0.72rem var(--font-mono); color: var(--muted); }
+.week .c { height: 26px; border-radius: 6px; background: var(--bg); border: 1px dashed var(--line); }
+.week .c.on { background: var(--accent); border: 0; }
+.week .c.on.alt { background: var(--ok); }
+.swing { display: grid; gap: 6px; }
+input[type="range"] { width: 100%; max-width: 260px; accent-color: var(--accent); }
+.pnl { font: 600 1.05rem var(--font-mono); }
+.pnl.pos { color: var(--ok); } .pnl.neg { color: var(--bad); }
+.mico { width: 30px; height: 30px; color: var(--accent); }
+@media (prefers-reduced-motion: reduce) { .paycard.tap, .paycard.tap .waves path { animation: none; } .packet, .track .fill { transition: none; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div>
+      <h1>What happens when you tap a card</h1>
+      <p class="lede">Step through a single card payment, from the tap at the register to the approval on screen, then see how the money actually moves the next day. Switch to a crypto-linked card to see where a program manager and BIN sponsor come in.</p>
+    </div>
+    <div class="paycard" id="paycard" aria-hidden="true">
+      <div class="top"><span id="cardLabel">DEBIT</span><svg class="waves" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 7c2.5 3 2.5 7 0 10"/><path d="M12 5c3.5 4 3.5 10 0 14"/><path d="M16 3c4.5 5 4.5 13 0 18"/></svg></div>
+      <div class="chip"></div>
+      <div class="bottom"><span class="num">•••• 7734</span><span id="cardIssuer">YOUR BANK</span></div>
+    </div>
+  </header>
+
+  <nav class="tabs" aria-label="Pages">
+    <a href="#simulator" id="tab-sim">Card tap simulator</a>
+    <a href="#crypto-cards" id="tab-crypto">How crypto cards work</a>
+  </nav>
+
+  <div class="view" id="view-sim">
+  <section class="controls" aria-label="Simulation settings">
+    <div class="field">
+      <span id="scLabel">Card type</span>
+      <div class="seg" role="group" aria-labelledby="scLabel">
+        <button type="button" id="sc-bank" data-sc="bank" aria-pressed="true">Bank debit card</button>
+        <button type="button" id="sc-crypto" data-sc="crypto" aria-pressed="false">Crypto-linked card</button>
+        <button type="button" id="sc-decline" data-sc="decline" aria-pressed="false">Crypto card, low balance</button>
+      </div>
+    </div>
+    <label class="field" for="amount">
+      <span>Purchase (USD)</span>
+      <input type="number" id="amount" value="6.50" min="0.5" max="5000" step="0.5">
+    </label>
+    <div class="btns">
+      <button type="button" class="btn" id="back">Back</button>
+      <button type="button" class="btn primary" id="next">Next step</button>
+      <button type="button" class="btn" id="play">Play all</button>
+      <button type="button" class="btn" id="reset">Start over</button>
+    </div>
+  </section>
+
+  <section class="schematic" aria-label="Payment path">
+    <div class="lane" id="lane"></div>
+    <div class="dirline"><span id="dirPill" class="pill req">Request</span><span id="dirText"></span><span class="clock" id="clock"></span></div>
+    <div class="track" id="track" aria-hidden="true"><div class="fill" id="trackFill"></div></div>
+  </section>
+
+  <section class="step" aria-live="polite">
+    <div class="card">
+      <div class="stepnum" id="stepnum"></div>
+      <h2 id="stitle"></h2>
+      <p id="sbody"></p>
+      <p class="why" id="swhy"></p>
+      <div id="sresult"></div>
+    </div>
+    <div class="card">
+      <h3>What gets sent</h3>
+      <div class="msg" id="smsg"></div>
+      <p class="note">Field names are simplified from the ISO 8583 messages networks use. Card numbers are tokenized, so the real number never touches the merchant.</p>
+    </div>
+  </section>
+
+  <section class="card settle">
+    <h2>After the tap: clearing and settlement</h2>
+    <p>The approval only promises payment. No money has moved yet. That happens in a second phase, usually overnight.</p>
+    <ol id="settleSteps"></ol>
+    <h3>Where your <span id="amtLabel">$6.50</span> goes</h3>
+    <div class="feebar" id="feebar" role="img" aria-label="Split of the purchase between merchant and fees"></div>
+    <div class="legend" id="legend"></div>
+    <div class="money" id="money"></div>
+    <p class="note">Example rates for illustration only. Real interchange depends on the card, the merchant category and the issuer. U.S. debit issuers with over $10B in assets have interchange capped by the Durbin Amendment; smaller banks are exempt, which is one reason fintech card programs often use smaller banks as BIN sponsors.</p>
+  </section>
+
+  <section class="settle">
+    <h2>Who's who</h2>
+    <div class="gloss" id="gloss"></div>
+  </section>
+
+  <section class="settle" aria-labelledby="newsFintechH">
+    <h2 id="newsFintechH">Latest in fintech and payments</h2>
+    <p class="note" id="newsFintechMeta">Loading headlines…</p>
+    <div class="news" id="newsFintech"></div>
+  </section>
+  </div>
+
+  <div class="view" id="view-crypto" hidden>
+    <section class="card">
+      <h2>Spending crypto with a card</h2>
+      <p>Merchants almost never accept crypto directly. A crypto-linked card lets you spend crypto anywhere cards are accepted, while the merchant still gets paid in dollars. The trick happens behind the scenes: at the moment you tap, something has to turn your crypto into money the card network understands.</p>
+      <p class="why"><b>The core problem:</b> card payments must be approved in a couple of seconds and usually settle in dollars on business days. Crypto lives on blockchains that run on their own clocks, with prices that move by the minute. Every crypto card design is a different answer to bridging those two worlds.</p>
+    </section>
+
+    <section class="settle">
+      <h2>Three ways crypto cards are funded</h2>
+      <div class="models">
+        <div class="card">
+          <svg class="mico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h13l-3-3"/><path d="M20 17H7l3 3"/></svg><span class="tag">Model 1</span>
+          <h3>Convert at the moment you pay</h3>
+          <p>You hold crypto like BTC or ETH. When you tap, the app sells just enough at the current price to cover the purchase.</p>
+          <ol class="flow"><li>Card authorization reaches the app by webhook</li><li>App quotes the price and reserves the crypto</li><li>App sells it for dollars and prefunds the BIN sponsor</li></ol>
+          <p class="note">Simple for users, but every purchase is a crypto sale, with price risk and possible taxes.</p>
+        </div>
+        <div class="card">
+          <svg class="mico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M14.5 9.5c-.5-1-1.5-1.5-2.5-1.5-1.7 0-2.8.9-2.8 2s1 1.7 2.8 2 2.8.9 2.8 2-1.1 2-2.8 2c-1.1 0-2.1-.5-2.6-1.5M12 6.5v1.5M12 16v1.5"/></svg><span class="tag">Model 2</span>
+          <h3>Spend a stablecoin balance</h3>
+          <p>You hold a dollar-pegged stablecoin like USDC. Since 1 USDC is designed to equal $1, there's no price to quote at the register.</p>
+          <ol class="flow"><li>App checks the USDC balance and reserves the amount</li><li>Card is approved like a normal debit card</li><li>Settlement happens in dollars or, in some programs, directly in USDC</li></ol>
+          <p class="note">A popular design for newer cards because it removes price swings from checkout.</p>
+        </div>
+        <div class="card">
+          <svg class="mico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span class="tag">Model 3</span>
+          <h3>Borrow against your crypto</h3>
+          <p>Your crypto stays put as collateral, and the card draws on a credit line backed by it. You repay later in crypto or dollars.</p>
+          <ol class="flow"><li>App locks crypto as collateral</li><li>Purchases draw on a credit line</li><li>If prices fall, you may need to add collateral</li></ol>
+          <p class="note">Avoids selling crypto at the register, but adds lending rules and liquidation risk.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Try it: what does a purchase cost in crypto?</h2>
+      <div class="calc">
+        <div class="inputs">
+          <label class="field" for="cPurchase"><span>Purchase (USD)</span><input type="number" id="cPurchase" value="50" min="1" step="1"></label>
+          <label class="field" for="cAsset"><span>Pay with</span>
+            <select id="cAsset">
+              <option value="USDC">USDC (stablecoin)</option>
+              <option value="ETH">ETH</option>
+              <option value="BTC">BTC</option>
+            </select>
+          </label>
+          <label class="field" for="cPrice"><span>Price per coin (USD, edit me)</span><input type="number" id="cPrice" value="1" min="0.0001" step="any"></label>
+          <label class="field" for="cSpread"><span>Conversion spread (%)</span><input type="number" id="cSpread" value="0" min="0" max="10" step="0.1"></label>
+        </div>
+        <div class="stack" aria-live="polite">
+          <div><div class="note">Crypto needed</div><div class="big" id="cNeed"></div></div>
+          <div><div class="note">Cost of converting</div><div class="big" id="cCost"></div></div>
+          <div class="swing" id="swingBox">
+            <label class="field" for="cSwing"><span>Price moves before the app sells: <b id="cSwingVal">0%</b></span></label>
+            <input type="range" id="cSwing" min="-10" max="10" step="0.5" value="0">
+            <div>App's gain or loss on this purchase: <span class="pnl" id="cPnl">$0.00</span></div>
+          </div>
+          <p id="cNote"></p>
+        </div>
+      </div>
+      <p class="note">Prices are rough November 2026 levels and spreads are examples. Edit them; they're not live quotes. A spread is the markup an app charges when it converts crypto to dollars.</p>
+    </section>
+
+    <section class="settle">
+      <h2>The crypto card stack</h2>
+      <p>A crypto card is several companies working together. Here's what each layer does, top to bottom.</p>
+      <div class="stack">
+        <div class="layer"><span class="ln">Crypto app</span><p><b>Program manager.</b> Owns the customer, the wallet and the card design. Decides in real time whether to approve each purchase.</p></div>
+        <div class="layer"><span class="ln">Crypto card platform</span><p>Specialists that bundle issuing, compliance and crypto conversion so apps can launch faster. Rain, Bridge (owned by Stripe) and Kulipa are examples.</p></div>
+        <div class="layer"><span class="ln">Issuer processor</span><p>Runs the card: approvals, limits and the webhook that asks the app for a decision.</p></div>
+        <div class="layer"><span class="ln">BIN sponsor bank</span><p>The licensed issuer. Lends its card network membership, runs KYC and anti-money-laundering checks, and holds the settlement funds.</p></div>
+        <div class="layer"><span class="ln">Card network</span><p>Visa, Mastercard and others. Connects the card to merchants worldwide and settles between banks, now including stablecoin settlement options for select partners.</p></div>
+      </div>
+    </section>
+
+    <section class="settle">
+      <h2>Custodial vs. self-custody cards</h2>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th></th><th>Custodial</th><th>Self-custody</th></tr></thead>
+          <tbody>
+            <tr><td>Who holds the crypto</td><td>The app holds it for you, like a bank account</td><td>You keep it in your own wallet</td></tr>
+            <tr><td>How a purchase is approved</td><td>App checks its internal ledger instantly</td><td>You pre-approve the app to pull funds, or move funds to a spending balance ahead of time</td></tr>
+            <tr><td>Speed at the register</td><td>Fast and simple</td><td>Harder, since blockchains can't confirm in 2 seconds</td></tr>
+            <tr><td>Main risk</td><td>Trusting the app with your funds</td><td>Losing your keys, or a failed on-chain transfer</td></tr>
+            <tr><td>Typical user</td><td>Mainstream users of exchanges and fintech apps</td><td>Crypto-native users who want to keep control</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="settle">
+      <h2>Settling in stablecoins</h2>
+      <div class="card">
+        <p>Normally the BIN sponsor pays the card network in dollars, and traditional settlement runs on business days only. That means a crypto app has to sell crypto and wire dollars to keep the account funded. Visa and Mastercard now let select issuers and acquirers settle in regulated stablecoins such as USDC instead. Stablecoins move over blockchains, including on weekends and holidays when bank wires don't.</p>
+        <div class="week" role="img" aria-label="Bank wires move on weekdays only; stablecoins move every day">
+          <span></span><span class="d">Mon</span><span class="d">Tue</span><span class="d">Wed</span><span class="d">Thu</span><span class="d">Fri</span><span class="d">Sat</span><span class="d">Sun</span>
+          <span>Bank wire</span><span class="c on"></span><span class="c on"></span><span class="c on"></span><span class="c on"></span><span class="c on"></span><span class="c"></span><span class="c"></span>
+          <span>Stablecoin</span><span class="c on alt"></span><span class="c on alt"></span><span class="c on alt"></span><span class="c on alt"></span><span class="c on alt"></span><span class="c on alt"></span><span class="c on alt"></span>
+        </div>
+        <p class="why"><b>Why it matters:</b> fewer conversions mean lower costs and less cash tied up waiting for bank hours. It's one of the clearest places where blockchains are improving traditional card payments.</p>
+      </div>
+    </section>
+
+    <section class="settle">
+      <h2>What makes crypto cards hard</h2>
+      <div class="gloss">
+        <div class="card"><h3>Compliance</h3><p>The bank sponsor must verify every user (KYC) and monitor for money laundering. Crypto programs get extra scrutiny, which slows onboarding.</p></div>
+        <div class="card"><h3>Price swings</h3><p>If an app quotes ETH at one price and sells a minute later at another, someone eats the difference. Stablecoins mostly remove this.</p></div>
+        <div class="card"><h3>Taxes</h3><p>In the U.S., spending crypto like BTC or ETH generally counts as selling it, so each purchase can create a taxable gain or loss.</p></div>
+        <div class="card"><h3>Speed</h3><p>Card approvals take about 2 seconds; many blockchains take longer to confirm. Apps keep an off-chain ledger so they can answer in time.</p></div>
+      </div>
+    </section>
+
+    <section class="settle">
+      <h2>Sources</h2>
+      <ul class="note" style="margin:0;padding-left:1.2em;display:grid;gap:4px;">
+        <li><a href="https://usa.visa.com/about-visa/newsroom/press-releases.releaseId.21951.html">Visa: Visa launches stablecoin settlement in the United States (Dec. 16, 2025)</a></li>
+        <li><a href="https://www.mastercard.com/gb/en/news-and-trends/press/2026/june/mastercard-expands-settlement-capabilities-to-include-stablecoin.html">Mastercard: Mastercard expands settlement capabilities to include stablecoin (June 3, 2026)</a></li>
+        <li><a href="https://www.federalreserve.gov/paymentsystems/regii-about.htm">Federal Reserve: Regulation II (debit card interchange fees)</a></li>
+        <li><a href="https://www.irs.gov/filing/digital-assets">IRS: Digital assets</a></li>
+      </ul>
+    </section>
+
+    <section class="settle" aria-labelledby="newsCryptoH">
+      <h2 id="newsCryptoH">Latest in crypto and stablecoins</h2>
+      <p class="note" id="newsCryptoMeta">Loading headlines…</p>
+      <div class="news" id="newsCrypto"></div>
+    </section>
+  </div>
+</div>
+
+<script>
+const ICONS = {
+  holder: '<path d="M8 3h8a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M11 18h2"/>',
+  pos: '<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 11h2M12 11h2M8 14h2M12 14h2M8 17h8"/>',
+  acq: '<path d="M4 10l8-5 8 5"/><path d="M5 10v9h14v-9M9 19v-5h6v5"/>',
+  visa: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/>',
+  iproc: '<rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4"/>',
+  bank: '<path d="M3 9l9-5 9 5"/><path d="M5 9v9M9.5 9v9M14.5 9v9M19 9v9M3 20h18"/>',
+  pm: '<rect x="3" y="6" width="18" height="13" rx="2"/><path d="M16 12h2"/><path d="M3 9h14a2 2 0 0 0 2-2V6"/>',
+  sponsor: '<path d="M12 3l8 3v5c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/>'
+};
+const NODES = {
+  holder:  { role: "You",              name: "Cardholder",       eg: "Phone or card" },
+  pos:     { role: "Merchant",         name: "Terminal",         eg: "Coffee shop register" },
+  acq:     { role: "Acquirer",         name: "Merchant processor", eg: "e.g. Stripe, Fiserv" },
+  visa:    { role: "Network",          name: "Card network",     eg: "e.g. Visa, Mastercard" },
+  iproc:   { role: "Issuer processor", name: "Issuer processor", eg: "e.g. Lithic, Marqeta" },
+  bank:    { role: "Issuer",           name: "Issuing bank",     eg: "Your bank" },
+  pm:      { role: "Program manager",  name: "Crypto app",       eg: "e.g. a wallet or exchange" },
+  sponsor: { role: "Issuer",           name: "BIN sponsor bank", eg: "Licensed U.S. bank" }
+};
+const LANES = {
+  bank:    ["holder", "pos", "acq", "visa", "iproc", "bank"],
+  crypto:  ["holder", "pos", "acq", "visa", "iproc", "pm", "sponsor"],
+  decline: ["holder", "pos", "acq", "visa", "iproc", "pm", "sponsor"]
+};
+
+function fmt(n) { return "$" + n.toFixed(2); }
+
+function buildSteps(sc, amt) {
+  const A = fmt(amt);
+  const cents = String(Math.round(amt * 100)).padStart(12, "0");
+  const base = { "Amount": `${A} (field 4: ${cents})`, "Merchant category": "5814 (fast food restaurants)" };
+  const crypto = sc !== "bank";
+  const steps = [];
+  steps.push({ node: "holder", dir: "req", ms: 0,
+    title: "You tap your card or phone",
+    body: `The chip or phone generates a one-time cryptogram for this exact ${A} purchase and hands the terminal a token in place of your real card number.`,
+    why: "Why it matters: a stolen cryptogram can't be reused, which is why tap and chip fraud is far lower than swiped-card fraud.",
+    msg: { "Card number": "Network token (4111 •••• •••• 7734)", "Cryptogram": "One-time code, valid for this purchase only", ...base } });
+  steps.push({ node: "pos", dir: "req", ms: 120,
+    title: "The terminal builds an authorization request",
+    body: "The register adds the merchant's ID, terminal ID and how the card was presented (contactless), then sends the request to the merchant's processor.",
+    why: "Why it matters: the merchant never needs to see your real card number, so a breach at the coffee shop doesn't expose it.",
+    msg: { "Message type": "0100 Authorization request", ...base, "Entry mode": "Contactless chip", "Merchant ID": "COFFEE-SF-0042" } });
+  steps.push({ node: "acq", dir: "req", ms: 260,
+    title: "The merchant's processor routes it to the card network",
+    body: "The acquirer reads the first 6 to 8 digits of the card number, called the BIN, to see which network the card belongs to, and forwards the request to that network.",
+    why: "Why it matters: the acquirer is the merchant's side of the deal. It's the party that will eventually deposit money into the merchant's account.",
+    msg: { "Message type": "0100 Authorization request", "BIN": "411111", "Routed to": "Card network", ...base } });
+  steps.push({ node: "visa", dir: "req", ms: 420,
+    title: "The card network checks it and finds the issuer",
+    body: "The network swaps the token back for the real card number, scores the transaction for fraud risk, and uses the BIN to look up who issued the card and which processor handles it.",
+    why: "Why it matters: the network doesn't lend money or hold your account. It's the rail that connects thousands of banks and millions of merchants and sets the rules they all follow.",
+    msg: { "Card number": "Real number restored (detokenized)", "Risk score": "Low (score 12 of 99)", "Issuer found by BIN": crypto ? "BIN sponsor bank" : "Your bank", ...base } });
+  steps.push({ node: "iproc", dir: "req", ms: 600,
+    title: "The issuer processor runs the card's rules",
+    body: crypto
+      ? "The issuer processor checks that the card is active and within its spending limits, then sends a real-time webhook to the crypto app asking whether to approve."
+      : "The issuer processor checks that the card is active, within limits and not flagged for fraud, then asks the bank's core system for the account balance.",
+    why: crypto
+      ? "Why it matters: this webhook is what makes modern fintech cards possible. The app gets to decide in real time, using whatever balance it holds, including crypto."
+      : "Why it matters: most banks outsource this work. The issuer processor is the technical engine behind the card.",
+    msg: { "Card status": "Active", "Daily limit check": "Passed", ...(crypto ? { "Webhook to": "Crypto app (program manager)", "Time to answer": "A few seconds at most" } : { "Balance request to": "Bank core system" }), ...base } });
+  if (crypto) {
+    const low = sc === "decline";
+    const bal = low ? Math.max(0, amt - 4).toFixed(2) : (amt + 182.4).toFixed(2);
+    steps.push({ node: "pm", dir: "req", ms: 1100,
+      title: low ? "The crypto app checks the balance and declines" : "The crypto app checks the balance and approves",
+      body: low
+        ? `Your app holds only ${bal} USDC, less than the ${A} purchase, so the app tells the issuer processor to decline.`
+        : `Your app holds ${bal} USDC. It reserves ${amt.toFixed(2)} USDC (stablecoins trade 1:1 with dollars) so it can't be spent twice, then answers "approve."`,
+      why: "Why it matters: the program manager owns the customer and the app. It never connects to the card network directly; it builds on top of the BIN sponsor and issuer processor.",
+      msg: { "USDC balance": bal + " USDC", "Needed": amt.toFixed(2) + " USDC", "Reserved": low ? "Nothing" : amt.toFixed(2) + " USDC", "Decision": low ? "Decline" : "Approve" } });
+    steps.push({ node: "sponsor", dir: "req", ms: 1250,
+      title: "The BIN sponsor bank stands behind it",
+      body: "The BIN sponsor is the licensed bank that actually issues the card. It doesn't make the split-second decision here, but the program runs on its license, its compliance checks and its money.",
+      why: "Why it matters: crypto apps can't join a card network on their own. A bank sponsor lends its network license and takes on legal responsibility for KYC, anti-money-laundering checks and settlement.",
+      msg: { "Issuer of record": "BIN sponsor bank", "Owns": "Network license, KYC/AML program, settlement account", "Decision source": "Program manager, within the bank's rules" } });
+  } else {
+    steps.push({ node: "bank", dir: "req", ms: 1000,
+      title: "Your bank checks your balance and approves",
+      body: `Your checking account has enough money, so the bank approves and places a ${A} hold. The money hasn't left your account yet; it's just set aside.`,
+      why: "Why it matters: the hold stops you from spending the same money twice before the payment settles tomorrow.",
+      msg: { "Available balance": "$1,240.18", "Hold placed": A, "Decision": "Approve" } });
+  }
+  const approved = sc !== "decline";
+  const code = approved ? "00 Approved" : "51 Insufficient funds";
+  const back = LANES[sc].slice(0, -1).reverse();
+  let t = steps[steps.length - 1].ms;
+  const backText = {
+    iproc: "The issuer processor packages the answer into an authorization response.",
+    visa: "The network passes the response back along the same path.",
+    acq: "The merchant processor forwards it to the store.",
+    pos: approved ? "The register shows Approved and prints your receipt." : "The register shows Declined.",
+    holder: approved ? "You walk off with your coffee. Total time: under 2 seconds." : "You're asked for another card. Total time: under 2 seconds.",
+    pm: "The crypto app's answer goes back to the issuer processor."
+  };
+  for (const n of back) {
+    if (n === "pm" || n === "sponsor") continue;
+    t += n === "holder" ? 60 : 110;
+    steps.push({ node: n, dir: approved ? "ok" : "bad", ms: t,
+      title: n === "holder" ? (approved ? "Approved" : "Declined") : "Response: " + code,
+      body: backText[n], why: "",
+      msg: { "Message type": "0110 Authorization response", "Response code": code, ...(approved ? { "Approval code": "A7Q2K9" } : {}), "Amount": A } });
+  }
+  return steps;
+}
+
+function settleSteps(sc) {
+  const crypto = sc !== "bank";
+  const s = [
+    "That evening, the merchant's processor sends the card network a batch of the day's approved purchases (clearing).",
+    "The network adds up what every issuer owes and what every acquirer is owed, then calculates one net amount for each.",
+    crypto
+      ? "The BIN sponsor pays the network from its settlement account. The crypto app must prefund that account, either by selling crypto for dollars or, in some programs, by settling in USDC through the network's stablecoin settlement."
+      : "Your bank pays the network from its settlement account and turns your hold into a final charge.",
+    "The network pays the acquirer, which deposits the money into the merchant's account, minus fees, usually within 1 to 2 business days."
+  ];
+  if (sc === "decline") s.unshift("Declined purchases never reach clearing. Nothing below happens for this one, but here's how an approved payment would settle.");
+  return s;
+}
+
+function money(amt) {
+  const ic = amt * 0.012 + 0.05, net = amt * 0.0013 + 0.02, acq = amt * 0.005 + 0.10;
+  const fees = ic + net + acq;
+  return [
+    ["You pay", amt],
+    ["Interchange to the card issuer (example 1.2% + 5¢)", -ic],
+    ["Card network fees (example 0.13% + 2¢)", -net],
+    ["Merchant processor's markup (example 0.5% + 10¢)", -acq],
+    ["Merchant receives", amt - fees, true]
+  ];
+}
+
+const GLOSS = [
+  ["Acquirer", "The merchant's bank or processor. It accepts card payments for the store and deposits the money."],
+  ["Card network", "Visa or Mastercard. It routes messages between acquirers and issuers and sets the rules, but doesn't hold your money."],
+  ["Issuer", "The bank that issues your card and is on the hook to pay for your purchases."],
+  ["BIN sponsor", "A licensed bank that issues cards on behalf of a fintech or crypto company that can't join the network directly."],
+  ["Issuer processor", "The technology that runs a card program: approving transactions, applying limits and sending webhooks."],
+  ["Program manager", "The company that owns the customer and the app, like a crypto wallet, and designs the card program."],
+  ["Authorization", "The real-time yes or no at the register. It promises payment but moves no money."],
+  ["Clearing and settlement", "The overnight process where purchases are totaled and money actually moves between banks."]
+];
+
+let sc = "bank", i = 0, timer = null, steps = [];
+const $ = id => document.getElementById(id);
+
+function amount() { const v = parseFloat($("amount").value); return isFinite(v) && v > 0 ? v : 6.5; }
+
+function renderLane() {
+  const lane = $("lane"); lane.innerHTML = "";
+  LANES[sc].forEach((k, idx) => {
+    if (idx) { const l = document.createElement("div"); l.className = "link"; l.dataset.idx = idx; l.innerHTML = '<span class="arr">⇄</span>'; lane.appendChild(l); }
+    const n = NODES[k], d = document.createElement("div");
+    d.className = "node"; d.dataset.k = k;
+    d.innerHTML = `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${ICONS[k]}</svg><span class="role">${n.role}</span><span class="name">${n.name}</span><span class="eg">${n.eg}</span>`;
+    lane.appendChild(d);
+  });
+  const pk = document.createElement("div"); pk.className = "packet"; pk.id = "packet"; lane.appendChild(pk);
+  const tr = $("track"); tr.querySelectorAll(".tick").forEach(t => t.remove());
+  const total = steps[steps.length - 1].ms || 1;
+  steps.forEach((st, j) => { const t = document.createElement("span"); t.className = "tick"; t.dataset.j = j; t.style.left = (st.ms / total * 100) + "%"; tr.appendChild(t); });
+  const pc = $("paycard");
+  pc.className = "paycard " + (sc === "bank" ? "" : sc);
+  $("cardLabel").textContent = sc === "bank" ? "DEBIT" : "CRYPTO DEBIT";
+  $("cardIssuer").textContent = sc === "bank" ? "YOUR BANK" : "CRYPTO APP";
+}
+
+function render() {
+  const s = steps[i], order = LANES[sc];
+  const visited = new Set(steps.slice(0, i + 1).map(x => x.node));
+  document.querySelectorAll(".node").forEach(el => {
+    el.classList.toggle("active", el.dataset.k === s.node);
+    el.classList.toggle("visited", visited.has(el.dataset.k));
+  });
+  const pos = order.indexOf(s.node);
+  document.querySelectorAll(".link").forEach(el => {
+    const idx = +el.dataset.idx;
+    const live = s.dir === "req" ? idx === pos : idx === pos + 1;
+    el.classList.toggle("live", live);
+    el.querySelector(".arr").textContent = live ? (s.dir === "req" ? "→" : "←") : "⇄";
+  });
+  const pill = $("dirPill");
+  pill.className = "pill " + (s.dir === "req" ? "req" : s.dir === "ok" ? "resp-ok" : "resp-bad");
+  pill.textContent = s.dir === "req" ? "Request" : "Response";
+  $("dirText").textContent = s.dir === "req" ? "Authorization request travels toward the issuer" : "Answer travels back to the register";
+  $("clock").textContent = `t = ${s.ms} ms`;
+  $("stepnum").textContent = `Step ${i + 1} of ${steps.length}`;
+  $("stitle").textContent = s.title;
+  $("sbody").textContent = s.body;
+  $("swhy").textContent = s.why; $("swhy").style.display = s.why ? "" : "none";
+  const res = $("sresult");
+  if (s.node === "holder" && s.dir !== "req") {
+    res.className = "result " + (s.dir === "ok" ? "ok" : "bad");
+    res.textContent = s.dir === "ok" ? `Approved in about ${(s.ms/1000).toFixed(1)} seconds. No money has moved yet.` : "Declined. The crypto balance couldn't cover the purchase.";
+  } else { res.className = ""; res.textContent = ""; }
+  $("smsg").innerHTML = Object.entries(s.msg).map(([k, v]) => `<div class="row"><span class="k">${k}</span><span class="v">${v}</span></div>`).join("");
+  const node = document.querySelector(`.node[data-k="${s.node}"]`), pk = $("packet");
+  if (node && pk) { pk.style.left = (node.offsetLeft + node.offsetWidth / 2) + "px"; pk.className = "packet " + (s.dir === "req" ? "" : s.dir); }
+  const total = steps[steps.length - 1].ms || 1;
+  $("trackFill").style.width = (s.ms / total * 100) + "%";
+  document.querySelectorAll(".track .tick").forEach(t => t.classList.toggle("done", +t.dataset.j <= i));
+  if (i === 0) { const pc = $("paycard"); pc.classList.remove("tap"); void pc.offsetWidth; pc.classList.add("tap"); }
+  $("back").disabled = i === 0;
+  $("next").disabled = i === steps.length - 1;
+}
+
+function renderStatic() {
+  const amt = amount();
+  $("settleSteps").innerHTML = settleSteps(sc).map(t => `<li>${t}</li>`).join("");
+  $("amtLabel").textContent = fmt(amt);
+  const m = money(amt), cols = ["var(--accent)", "var(--signal)", "var(--muted)", "var(--ok)"];
+  const parts = [[m[4][0], m[4][1], cols[0]], [m[1][0], -m[1][1], cols[1]], [m[2][0], -m[2][1], cols[2]], [m[3][0], -m[3][1], cols[3]]];
+  $("feebar").innerHTML = parts.map(([k, v, c]) => `<span title="${k}" style="width:${v / amt * 100}%;background:${c}"></span>`).join("");
+  $("legend").innerHTML = parts.map(([k, v, c]) => `<span><i style="background:${c}"></i>${k.replace(/ \(example.*\)/, "")}: ${(v / amt * 100).toFixed(1)}%</span>`).join("");
+  $("money").innerHTML = money(amt).map(([k, v, tot]) => `<div class="row${tot ? " total" : ""}"><span>${k}</span><span class="amt">${v < 0 ? "−" : ""}${fmt(Math.abs(v))}</span></div>`).join("");
+}
+
+function stop() { if (timer) { clearInterval(timer); timer = null; $("play").textContent = "Play all"; } }
+
+function rebuild(keep) {
+  steps = buildSteps(sc, amount());
+  if (!keep || i >= steps.length) i = 0;
+  renderLane(); render(); renderStatic();
+}
+
+document.querySelectorAll(".seg button").forEach(b => b.addEventListener("click", () => {
+  stop(); sc = b.dataset.sc;
+  document.querySelectorAll(".seg button").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+  rebuild(false);
+}));
+$("amount").addEventListener("input", () => rebuild(true));
+$("next").addEventListener("click", () => { stop(); if (i < steps.length - 1) { i++; render(); } });
+$("back").addEventListener("click", () => { stop(); if (i > 0) { i--; render(); } });
+$("reset").addEventListener("click", () => { stop(); i = 0; render(); });
+$("play").addEventListener("click", () => {
+  if (timer) { stop(); return; }
+  if (i === steps.length - 1) i = 0;
+  render(); $("play").textContent = "Pause";
+  timer = setInterval(() => { if (i < steps.length - 1) { i++; render(); } else stop(); }, 1600);
+});
+document.addEventListener("keydown", e => {
+  if (e.target.tagName === "INPUT") return;
+  if (e.key === "ArrowRight") $("next").click();
+  if (e.key === "ArrowLeft") $("back").click();
+});
+
+$("gloss").innerHTML = GLOSS.map(([t, d]) => `<div class="card"><h3>${t}</h3><p>${d}</p></div>`).join("");
+rebuild(false);
+
+// ---- Views (hash routing) ----
+const VIEWS = { "simulator": "view-sim", "crypto-cards": "view-crypto" };
+function route() {
+  const h = location.hash.replace("#", "");
+  const key = VIEWS[h] ? h : "simulator";
+  for (const [k, id] of Object.entries(VIEWS)) $(id).hidden = k !== key;
+  $("tab-sim").setAttribute("aria-current", key === "simulator" ? "page" : "false");
+  $("tab-crypto").setAttribute("aria-current", key === "crypto-cards" ? "page" : "false");
+  if (key !== "simulator") stop();
+}
+window.addEventListener("hashchange", () => { route(); render(); });
+window.addEventListener("resize", () => render());
+route();
+
+// ---- Crypto cost calculator ----
+const PRICES = { USDC: 1, ETH: 2500, BTC: 82000 };
+const SPREADS = { USDC: 0, ETH: 1.5, BTC: 1.5 };
+function calc() {
+  const usd = Math.max(0, parseFloat($("cPurchase").value) || 0);
+  const asset = $("cAsset").value;
+  const price = Math.max(0.0001, parseFloat($("cPrice").value) || PRICES[asset]);
+  const spread = Math.max(0, parseFloat($("cSpread").value) || 0) / 100;
+  const coins = usd * (1 + spread) / price;
+  const dp = asset === "USDC" ? 2 : asset === "ETH" ? 5 : 7;
+  $("cNeed").textContent = coins.toFixed(dp) + " " + asset;
+  $("cCost").textContent = fmt(usd * spread);
+  const sw = parseFloat($("cSwing").value) || 0;
+  $("cSwingVal").textContent = (sw > 0 ? "+" : "") + sw + "%";
+  const pnl = asset === "USDC" ? 0 : usd * sw / 100;
+  const pe = $("cPnl"); pe.textContent = (pnl < 0 ? "−" : pnl > 0 ? "+" : "") + fmt(Math.abs(pnl));
+  pe.className = "pnl " + (pnl > 0 ? "pos" : pnl < 0 ? "neg" : "");
+  $("swingBox").style.opacity = asset === "USDC" ? 0.5 : 1;
+  $("cNote").textContent = asset === "USDC"
+    ? "Because USDC tracks the dollar, the purchase costs the same amount in coins, with no price risk and usually no taxable gain."
+    : `If ${asset} moves 2% between the quote and the sale, the app gains or loses about ${fmt(usd * 0.02)} on this purchase. In the U.S., spending ${asset} also counts as selling it, which can trigger capital gains tax.`;
+}
+$("cAsset").addEventListener("change", () => {
+  const a = $("cAsset").value; $("cPrice").value = PRICES[a]; $("cSpread").value = SPREADS[a]; calc();
+});
+["cPurchase", "cPrice", "cSpread", "cSwing"].forEach(id => $(id).addEventListener("input", calc));
+calc();
+
+// ---- News (reads news.json, which a scheduled GitHub Action refreshes) ----
+function esc(t) { return String(t).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+function safeUrl(u) { try { const x = new URL(u); return /^https?:$/.test(x.protocol) ? x.href : "#"; } catch { return "#"; } }
+function fmtDate(d) { const x = new Date(/^\d{4}-\d{2}-\d{2}$/.test(d) ? d + "T12:00:00" : d); return isNaN(x) ? "" : x.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }); }
+function renderNews(listId, metaId, items, updated) {
+  const el = $(listId);
+  if (!items || !items.length) { $(metaId).textContent = "No headlines available right now."; return; }
+  el.innerHTML = items.slice(0, 8).map(n =>
+    `<a class="item" href="${safeUrl(n.url)}" target="_blank" rel="noopener"><span class="dt">${esc(fmtDate(n.date))}</span><span><span class="hl">${esc(n.title)}</span><br><span class="src">${esc(n.source)}</span></span></a>`).join("");
+  $(metaId).textContent = `Updated ${fmtDate(updated)}. Headlines link to the original source.`;
+}
+fetch("news.json", { cache: "no-store" })
+  .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+  .then(d => { renderNews("newsFintech", "newsFintechMeta", d.fintech, d.updated); renderNews("newsCrypto", "newsCryptoMeta", d.crypto, d.updated); })
+  .catch(() => { $("newsFintechMeta").textContent = $("newsCryptoMeta").textContent = "Headlines couldn't load. They appear once news.json is published next to this page."; });
+</script>
+</body>
+</html>

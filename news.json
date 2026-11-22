@@ -1,0 +1,67 @@
+{
+  "updated": "2026-11-21",
+  "fintech": [
+    {
+      "date": "2026-11-17",
+      "title": "OpenAI debuts ChatGPT Wallet for agentic commerce",
+      "source": "FinTech Futures",
+      "url": "https://www.fintechfutures.com/"
+    },
+    {
+      "date": "2026-11-12",
+      "title": "DTCC plans Solana access for live tokenization service",
+      "source": "NCFA Weekly Fintech Intelligence",
+      "url": "https://ncfacanada.org/?p=86218"
+    },
+    {
+      "date": "2026-11-09",
+      "title": "Northern Trust cuts onboarding data prep 83% with AI agent",
+      "source": "NCFA Weekly Fintech Intelligence",
+      "url": "https://ncfacanada.org/?p=86218"
+    },
+    {
+      "date": "2026-11-04",
+      "title": "Tokenisation fintech tZERO to go public via SPAC deal",
+      "source": "FinTech Futures",
+      "url": "https://www.fintechfutures.com/"
+    },
+    {
+      "date": "2026-11-02",
+      "title": "CD&R and GTCR reportedly weighing $40bn buyout of Global Payments",
+      "source": "FinTech Futures",
+      "url": "https://www.fintechfutures.com/"
+    }
+  ],
+  "crypto": [
+    {
+      "date": "2026-11-12",
+      "title": "DTCC plans Solana access for live tokenization service",
+      "source": "NCFA Weekly Fintech Intelligence",
+      "url": "https://ncfacanada.org/?p=86218"
+    },
+    {
+      "date": "2026-11-04",
+      "title": "Tokenisation fintech tZERO to go public via SPAC deal",
+      "source": "FinTech Futures",
+      "url": "https://www.fintechfutures.com/"
+    },
+    {
+      "date": "2026-10-25",
+      "title": "Mastercard launches Stablecoin Security to detect fraud and scams in stablecoin payments",
+      "source": "Week in Stablecoin Payments",
+      "url": "https://sg.linkedin.com/in/edithlim"
+    },
+    {
+      "date": "2026-08-19",
+      "title": "OCC races to finalize GENIUS Act stablecoin rules by November",
+      "source": "The Block",
+      "url": "https://www.theblock.co/tag/stablecoins?page=5"
+    },
+    {
+      "date": "2026-06-03",
+      "title": "Mastercard expands settlement to include stablecoins, plus intraday, weekend and holiday options",
+      "source": "Mastercard",
+      "url": "https://www.mastercard.com/gb/en/news-and-trends/press/2026/june/mastercard-expands-settlement-capabilities-to-include-stablecoin.html"
+    }
+  ]
+}
