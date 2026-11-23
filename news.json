@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-22",
+  "updated": "2026-11-23",
   "fintech": [
     {
       "date": "2027-02-17",
@@ -52,52 +52,52 @@
   ],
   "crypto": [
     {
-      "date": "2026-11-22",
-      "title": "More on the pending oversight hearings: State of Crypto",
-      "source": "CoinDesk",
-      "url": "https://www.coindesk.com/"
-    },
-    {
-      "date": "2026-11-22",
-      "title": "Chainflip\u2019s losses climb to $12 million after protocol discloses 122.9 BTC theft, offers hacker bounty",
-      "source": "The Block",
-      "url": "https://www.theblock.co/news/defi/2026-11-22-chainflips-losses-climb-to-12-million-after-protocol-discloses-122-9-btc-theft-offers-hacker-bounty-444829"
-    },
-    {
-      "date": "2026-11-22",
-      "title": "The future of onchain FX could start with users, not institutional liquidity",
+      "date": "2026-11-23",
+      "title": "CFTC staff say exchanges can count Bitcoin toward operating reserves",
       "source": "Cointelegraph",
-      "url": "https://cointelegraph.com/opinion/future-onchain-fx-could-start-with-users-not-institutional-liquidity?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      "url": "https://cointelegraph.com/news/cftc-staff-say-exchanges-can-count-bitcoin-toward-operating-reserves?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
     },
     {
-      "date": "2026-11-22",
-      "title": "Bitcoin's quantum security challenge extends to bridges, custodians and millions of coins",
-      "source": "CoinDesk",
-      "url": "https://www.coindesk.com/tech/2026/11/22/bitcoin-s-quantum-security-challenge-extends-to-bridges-custodians-and-millions-of-coins"
+      "date": "2026-11-23",
+      "title": "Grayscale says bitcoin and major altcoins look \u2018oversold\u2019 as AI risks cloud near-term outlook",
+      "source": "The Block",
+      "url": "https://www.theblock.co/news/markets/2026-11-23-grayscale-bitcoin-altcoins-oversold-ai-risks-crypto-outlook-445418"
     },
     {
-      "date": "2026-11-22",
+      "date": "2026-11-23",
+      "title": "Grayscale\u2019s new 2x leveraged Zcash ETF takes 13% opening day tumble",
+      "source": "The Block",
+      "url": "https://www.theblock.co/news/business/2026-11-23-grayscale-launches-2x-zcash-etf-three-months-spot-fund-debut-445407"
+    },
+    {
+      "date": "2026-11-23",
       "title": "Here\u2019s what happened in crypto today",
       "source": "Cointelegraph",
       "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
     },
     {
-      "date": "2026-11-22",
-      "title": "Bitcoin briefly drops to $17K on Kraken, exchange upholds trades",
+      "date": "2026-11-23",
+      "title": "US seeks to recover $1.1B in crypto stolen in North Korea-linked Binance hack",
       "source": "Cointelegraph",
-      "url": "https://cointelegraph.com/news/bitcoin-17k-kraken-canadian-dollar-market-trades-stand?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      "url": "https://cointelegraph.com/news/us-seeks-11b-crypto-stolen-north-korea-binance-hack?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
     },
     {
-      "date": "2026-11-22",
-      "title": "South Korean exchanges halt CYBER transfers amid suspected bridge exploit",
+      "date": "2026-11-23",
+      "title": "Kalshi secures temporary win in New York gambling law dispute",
       "source": "Cointelegraph",
-      "url": "https://cointelegraph.com/news/upbit-bithumb-suspend-cyber-transfers-bridge-exploit?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      "url": "https://cointelegraph.com/news/kalshi-temporary-win-new-york-gambling-law-dispute?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
     },
     {
-      "date": "2026-11-22",
-      "title": "Chainflip confirms $12M hack, offers attacker 10% bounty",
+      "date": "2026-11-23",
+      "title": "DOJ seeks $1.17 billion in USDC tied to Binance hack; Circle could issue replacement tokens",
+      "source": "The Block",
+      "url": "https://www.theblock.co/news/regulation/2026-11-23-doj-1-17-billion-usdc-binance-hack-circle-replacement-tokens-445398"
+    },
+    {
+      "date": "2026-11-23",
+      "title": "BTCS offloads $44M in ETH to reduce DeFi debt amid market downturn",
       "source": "Cointelegraph",
-      "url": "https://cointelegraph.com/news/chainflip-12m-crypto-hack-10-percent-bounty?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      "url": "https://cointelegraph.com/news/btcs-offloads-44m-eth-reduce-defi-debt-market-downturn?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
     }
   ]
 }
