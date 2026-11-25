@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-24",
+  "updated": "2026-11-25",
   "fintech": [
     {
       "date": "2027-02-17",
@@ -12,6 +12,12 @@
       "title": "Who controls payment initiation? The battle for the future of payments",
       "source": "Finextra",
       "url": "https://www.finextra.com/event-info/648/who-controls-payment-initiation-the-battle-for-the-future-of-payments?utm_medium=rssfinextra&utm_source=finextrafeed"
+    },
+    {
+      "date": "2027-01-21",
+      "title": "Agentic commerce at scale: Why trust is the new foundation for payments",
+      "source": "Finextra",
+      "url": "https://www.finextra.com/event-info/650/agentic-commerce-at-scale-why-trust-is-the-new-foundation-for-payments?utm_medium=rssfinextra&utm_source=finextrafeed"
     },
     {
       "date": "2027-01-20",
@@ -42,62 +48,56 @@
       "title": "Self-service, AI-enabled payments: Putting corporates in control of exceptions",
       "source": "Finextra",
       "url": "https://www.finextra.com/event-info/644/self-service-ai-enabled-payments-putting-corporates-in-control-of-exceptions?utm_medium=rssfinextra&utm_source=finextrafeed"
-    },
-    {
-      "date": "2026-11-25",
-      "title": "What defines the issuer of tomorrow?",
-      "source": "Finextra",
-      "url": "https://www.finextra.com/event-info/642/what-defines-the-issuer-of-tomorrow?utm_medium=rssfinextra&utm_source=finextrafeed"
     }
   ],
   "crypto": [
     {
-      "date": "2026-11-24",
-      "title": "Here\u2019s what happened in crypto today",
+      "date": "2026-11-25",
+      "title": "Braiins warns of Bitcoin mining attacks affecting over 1,000 sites",
       "source": "Cointelegraph",
-      "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      "url": "https://cointelegraph.com/news/braiins-warns-bitcoin-mining-attacks-affecting-1000-sites?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
     },
     {
-      "date": "2026-11-24",
-      "title": "Bitcoin miner CleanSpark swings to $987 million annual loss as BTC production declines",
+      "date": "2026-11-25",
+      "title": "Why ECB collateral eligibility could boost demand for tokenized bonds",
+      "source": "Cointelegraph",
+      "url": "https://cointelegraph.com/news/why-ecb-collateral-eligibility-could-boost-demand-tokenized-bonds?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+    },
+    {
+      "date": "2026-11-25",
+      "title": "Bitcoin miners hit by hashrate hijacking attack exploiting unencrypted connections",
       "source": "The Block",
-      "url": "https://www.theblock.co/news/business/2026-11-24-bitcoin-miner-cleanspark-swings-987-million-annual-loss-btc-production-declines-446061"
+      "url": "https://www.theblock.co/news/ecosystems/2026-11-25-bitcoin-miners-hit-hashrate-hijacking-attack-exploiting-unencrypted-connections-446723"
     },
     {
-      "date": "2026-11-24",
-      "title": "Europol follows $28.5M crypto trail in streaming piracy crackdown",
-      "source": "Cointelegraph",
-      "url": "https://cointelegraph.com/news/europol-crypto-trail-streaming-piracy-crackdown?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
-    },
-    {
-      "date": "2026-11-24",
-      "title": "SEC staff gives Molecule no-action relief for scientific research tokens",
+      "date": "2026-11-25",
+      "title": "Fidelity files for spot Chainlink ETF with planned Nasdaq listing",
       "source": "The Block",
-      "url": "https://www.theblock.co/news/regulation/2026-11-24-sec-staff-gives-molecule-no-action-relief-scientific-research-tokens-446067"
+      "url": "https://www.theblock.co/news/business/2026-11-25-fidelity-chainlink-etf-nasdaq-listing-446735"
     },
     {
-      "date": "2026-11-24",
-      "title": "Utah moves to dismiss criminal charges against Kalshi after trading halt",
+      "date": "2026-11-25",
+      "title": "Ethereum Foundation backs Keccak-256 to counter quantum, AI threats",
       "source": "Cointelegraph",
-      "url": "https://cointelegraph.com/news/utah-moves-to-dismiss-criminal-charges-against-kalshi-after-trading-halt?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      "url": "https://cointelegraph.com/news/ethereum-foundation-keccak-256-counter-quantum-ai-threats?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
     },
     {
-      "date": "2026-11-24",
-      "title": "Bitcoin sell-off driven by weak demand, forced liquidations: 21Shares",
-      "source": "Cointelegraph",
-      "url": "https://cointelegraph.com/news/bitcoin-selloff-weak-demand-forced-liquidations-21shares?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      "date": "2026-11-25",
+      "title": "French Senate blocks new crypto tax and wallet list critics called a kidnapping risk",
+      "source": "CoinDesk",
+      "url": "https://www.coindesk.com/business/2026/11/25/french-senate-blocks-new-crypto-tax-and-wallet-list-critics-called-a-kidnapping-risk"
     },
     {
-      "date": "2026-11-24",
-      "title": "Coldcard reveals how Bitcoin wallet flaw went undetected for over 5 years",
-      "source": "Cointelegraph",
-      "url": "https://cointelegraph.com/news/coldcard-how-security-reviews-missed-bitcoin-wallet-flaw-years?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
-    },
-    {
-      "date": "2026-11-24",
-      "title": "Payward\u2019s Krak plans early 2027 launch of US credit cards with bitcoin cashback, including one secured by USDC",
+      "date": "2026-11-25",
+      "title": "Justice Department takes aim at billions in crypto fraud proceeds in historic \u2018largest ever crackdown\u2019",
       "source": "The Block",
-      "url": "https://www.theblock.co/news/business/2026-11-24-kraken-krak-early-2027-launch-us-credit-cards-bitcoin-cashback-usdc-collateral-445498"
+      "url": "https://www.theblock.co/news/regulation/2026-11-25-justice-department-takes-aim-billions-crypto-fraud-proceeds-largest-ever-crackdown-446711"
+    },
+    {
+      "date": "2026-11-25",
+      "title": "Nvidia agrees to $290 million settlement over crypto mining disclosures amid Jensen Huang turmoil",
+      "source": "The Block",
+      "url": "https://www.theblock.co/news/regulation/2026-11-25-nvidia-290-million-settlement-crypto-mining-class-action-446709"
     }
   ]
 }
