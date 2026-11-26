@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-25",
+  "updated": "2026-11-26",
   "fintech": [
     {
       "date": "2027-02-17",
@@ -52,52 +52,52 @@
   ],
   "crypto": [
     {
-      "date": "2026-11-25",
-      "title": "Braiins warns of Bitcoin mining attacks affecting over 1,000 sites",
+      "date": "2026-11-26",
+      "title": "UK is \u2018getting it wrong\u2019 on DeFi regulation, says Coinbase",
       "source": "Cointelegraph",
-      "url": "https://cointelegraph.com/news/braiins-warns-bitcoin-mining-attacks-affecting-1000-sites?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      "url": "https://cointelegraph.com/news/uk-wrong-defi-regulation-coinbase?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
     },
     {
-      "date": "2026-11-25",
-      "title": "Why ECB collateral eligibility could boost demand for tokenized bonds",
+      "date": "2026-11-26",
+      "title": "Japan weighs tighter oversight of DeFi, self-custodial wallets",
       "source": "Cointelegraph",
-      "url": "https://cointelegraph.com/news/why-ecb-collateral-eligibility-could-boost-demand-tokenized-bonds?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      "url": "https://cointelegraph.com/news/japan-tighter-oversight-defi-self-custodial-wallets?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
     },
     {
-      "date": "2026-11-25",
-      "title": "Bitcoin miners hit by hashrate hijacking attack exploiting unencrypted connections",
+      "date": "2026-11-26",
+      "title": "Spain moves to grant financial watchdog power to freeze crypto accounts",
+      "source": "Cointelegraph",
+      "url": "https://cointelegraph.com/news/spain-moves-grant-financial-watchdog-power-freeze-crypto-accounts?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+    },
+    {
+      "date": "2026-11-26",
+      "title": "Crypto on notice as hawkish Fed risks December \u2018meltdown\u2019",
+      "source": "Cointelegraph",
+      "url": "https://cointelegraph.com/markets/crypto-hawkish-fed-risks-december-meltdown?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+    },
+    {
+      "date": "2026-11-26",
+      "title": "Tokenized Anthropic Holders Doubled in 3 Days",
       "source": "The Block",
-      "url": "https://www.theblock.co/news/ecosystems/2026-11-25-bitcoin-miners-hit-hashrate-hijacking-attack-exploiting-unencrypted-connections-446723"
+      "url": "https://www.theblock.co/newsletters/tokenization-briefing/2026-11-26-tokenized-anthropic-holders-doubled-in-3-days-446013"
     },
     {
-      "date": "2026-11-25",
-      "title": "Fidelity files for spot Chainlink ETF with planned Nasdaq listing",
-      "source": "The Block",
-      "url": "https://www.theblock.co/news/business/2026-11-25-fidelity-chainlink-etf-nasdaq-listing-446735"
-    },
-    {
-      "date": "2026-11-25",
-      "title": "Ethereum Foundation backs Keccak-256 to counter quantum, AI threats",
-      "source": "Cointelegraph",
-      "url": "https://cointelegraph.com/news/ethereum-foundation-keccak-256-counter-quantum-ai-threats?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
-    },
-    {
-      "date": "2026-11-25",
-      "title": "French Senate blocks new crypto tax and wallet list critics called a kidnapping risk",
+      "date": "2026-11-26",
+      "title": "A tiny payment can expose the IP address behind a bitcoin wallet, developer finds",
       "source": "CoinDesk",
-      "url": "https://www.coindesk.com/business/2026/11/25/french-senate-blocks-new-crypto-tax-and-wallet-list-critics-called-a-kidnapping-risk"
+      "url": "https://www.coindesk.com/tech/2026/11/26/a-tiny-payment-can-expose-the-ip-address-behind-a-bitcoin-wallet-developer-finds"
     },
     {
-      "date": "2026-11-25",
-      "title": "Justice Department takes aim at billions in crypto fraud proceeds in historic \u2018largest ever crackdown\u2019",
-      "source": "The Block",
-      "url": "https://www.theblock.co/news/regulation/2026-11-25-justice-department-takes-aim-billions-crypto-fraud-proceeds-largest-ever-crackdown-446711"
+      "date": "2026-11-26",
+      "title": "Bitcoin\u2019s dormant supply rises, a behavior seen during previous bear-market bottoming phases",
+      "source": "CoinDesk",
+      "url": "https://www.coindesk.com/markets/2026/11/26/bitcoin-s-dormant-supply-rises-a-behavior-seen-during-previous-bear-market-bottoming-phases"
     },
     {
-      "date": "2026-11-25",
-      "title": "Nvidia agrees to $290 million settlement over crypto mining disclosures amid Jensen Huang turmoil",
-      "source": "The Block",
-      "url": "https://www.theblock.co/news/regulation/2026-11-25-nvidia-290-million-settlement-crypto-mining-class-action-446709"
+      "date": "2026-11-26",
+      "title": "BIS chief Pablo Hern\u00e1ndez de Cos set to become next ECB president: FT",
+      "source": "Cointelegraph",
+      "url": "https://cointelegraph.com/news/bis-chief-pablo-hernndez-de-cos-next-ecb-president?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
     }
   ]
 }
