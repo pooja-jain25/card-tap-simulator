@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-26",
+  "updated": "2026-11-27",
   "fintech": [
     {
       "date": "2027-02-17",
@@ -52,52 +52,52 @@
   ],
   "crypto": [
     {
-      "date": "2026-11-26",
-      "title": "UK is \u2018getting it wrong\u2019 on DeFi regulation, says Coinbase",
+      "date": "2026-11-27",
+      "title": "Franklin Templeton makes room for HYPE in crypto index ETF",
       "source": "Cointelegraph",
-      "url": "https://cointelegraph.com/news/uk-wrong-defi-regulation-coinbase?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      "url": "https://cointelegraph.com/news/franklin-templeton-hype-crypto-index-etf?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
     },
     {
-      "date": "2026-11-26",
-      "title": "Japan weighs tighter oversight of DeFi, self-custodial wallets",
+      "date": "2026-11-27",
+      "title": "Bitcoin whales pile into BTC despite shrinking profit cushion",
       "source": "Cointelegraph",
-      "url": "https://cointelegraph.com/news/japan-tighter-oversight-defi-self-custodial-wallets?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      "url": "https://cointelegraph.com/markets/bitcoin-whales-pile-btc-despite-shrinking-profit-cushion?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
     },
     {
-      "date": "2026-11-26",
-      "title": "Spain moves to grant financial watchdog power to freeze crypto accounts",
-      "source": "Cointelegraph",
-      "url": "https://cointelegraph.com/news/spain-moves-grant-financial-watchdog-power-freeze-crypto-accounts?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
-    },
-    {
-      "date": "2026-11-26",
-      "title": "Crypto on notice as hawkish Fed risks December \u2018meltdown\u2019",
-      "source": "Cointelegraph",
-      "url": "https://cointelegraph.com/markets/crypto-hawkish-fed-risks-december-meltdown?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
-    },
-    {
-      "date": "2026-11-26",
-      "title": "Tokenized Anthropic Holders Doubled in 3 Days",
+      "date": "2026-11-27",
+      "title": "CryptoQuant says bitcoin price recovery needs USDT supply growth",
       "source": "The Block",
-      "url": "https://www.theblock.co/newsletters/tokenization-briefing/2026-11-26-tokenized-anthropic-holders-doubled-in-3-days-446013"
+      "url": "https://www.theblock.co/news/markets/2026-11-27-cryptoquant-bitcoin-price-recovery-usdt-supply-growth-447560"
     },
     {
-      "date": "2026-11-26",
-      "title": "A tiny payment can expose the IP address behind a bitcoin wallet, developer finds",
-      "source": "CoinDesk",
-      "url": "https://www.coindesk.com/tech/2026/11/26/a-tiny-payment-can-expose-the-ip-address-behind-a-bitcoin-wallet-developer-finds"
-    },
-    {
-      "date": "2026-11-26",
-      "title": "Bitcoin\u2019s dormant supply rises, a behavior seen during previous bear-market bottoming phases",
-      "source": "CoinDesk",
-      "url": "https://www.coindesk.com/markets/2026/11/26/bitcoin-s-dormant-supply-rises-a-behavior-seen-during-previous-bear-market-bottoming-phases"
-    },
-    {
-      "date": "2026-11-26",
-      "title": "BIS chief Pablo Hern\u00e1ndez de Cos set to become next ECB president: FT",
+      "date": "2026-11-27",
+      "title": "China sets March 2027 rollout for blockchain identity regulations",
       "source": "Cointelegraph",
-      "url": "https://cointelegraph.com/news/bis-chief-pablo-hernndez-de-cos-next-ecb-president?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+      "url": "https://cointelegraph.com/news/china-march-2027-rollout-blockchain-identity-regulations?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+    },
+    {
+      "date": "2026-11-27",
+      "title": "Bitcoin price drops below $59K as Anthropic joins tech stock rebound",
+      "source": "Cointelegraph",
+      "url": "https://cointelegraph.com/markets/bitcoin-price-below-59k-anthropic-tech-stock-rebound?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+    },
+    {
+      "date": "2026-11-27",
+      "title": "Tether buys $10 million of Bitdeer shares as stock hovers near all-time low",
+      "source": "The Block",
+      "url": "https://www.theblock.co/news/business/2026-11-27-tether-buys-10-million-of-bitdeer-shares-as-stock-hovers-near-all-time-low-447554"
+    },
+    {
+      "date": "2026-11-27",
+      "title": "What was Coinbase worth while Nasdaq was closed?",
+      "source": "Cointelegraph",
+      "url": "https://cointelegraph.com/news/what-was-coinbase-worth-while-nasdaq-was-closed?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound"
+    },
+    {
+      "date": "2026-11-27",
+      "title": "AI math breakthroughs revive Bitcoin security fears, but practical threat remains unproven: K33",
+      "source": "The Block",
+      "url": "https://www.theblock.co/news/ecosystems/2026-11-27-ai-math-breakthroughs-revive-bitcoin-security-fears-but-practical-threat-remains-unproven-k33-447549"
     }
   ]
 }
